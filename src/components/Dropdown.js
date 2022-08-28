@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-function Dropdown({ options, selected, onSelectedChange }) {
+function Dropdown({ label, options, selected, onSelectedChange }) {
     const [open, setOpen] = useState(false);
     const ref = useRef();
 
@@ -36,10 +36,20 @@ function Dropdown({ options, selected, onSelectedChange }) {
         );
     });
 
+    const renederedText = options.map((option) => {
+        if (option.value === selected.value) {
+            return (
+                <div key={option.value} style={{ marginTop: '30px' }}>
+                    <span style={{ color: option.value }}>This text is {option.value}!</span>
+                </div>)
+        };
+        return null;
+    })
+
     return (
         <div ref={ref} className="ui form">
             <div className="field">
-                <label className="label">Select a Color</label>
+                <label className="label" style={{ marginTop: '20px' }}>{label}</label>
                 <div 
                     onClick={() => setOpen(!open)} 
                     className={`ui selection dropdown ${open ? 'visible active': ''}`}
@@ -51,6 +61,9 @@ function Dropdown({ options, selected, onSelectedChange }) {
                     </div>
                 </div>
             </div>
+                <div>
+                    {renederedText}
+                </div>
         </div>
     );
 }
